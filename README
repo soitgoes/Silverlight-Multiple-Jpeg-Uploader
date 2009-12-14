@@ -1,5 +1,15 @@
 This project isn't complete yet.  I could use some assistance on the Silverlight end. 
 
+References:
+This project uses a version of SharpZipLib.
+Originally from SharpDevelop but ported to Silverlight.  http://www.codeplex.com/slsharpziplib
+
+Also uses FJ.Core for jpeg resizing
+
+
+I intend to make the server end compatible with the "Silverlight File Upload"
+http://silverlightfileupld.codeplex.com/
+
  Currently the project resizes and zips all with code that is safe for silverlight assemblies.
  
  Ultimately I would like to have a very simple UI with a processing gif (during the resize and zip phase).
