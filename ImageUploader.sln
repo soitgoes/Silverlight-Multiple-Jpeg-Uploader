@@ -5,6 +5,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImageUploader", "ImageUploa
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImageUploader.Web", "ImageUploader.Web\ImageUploader.Web.csproj", "{89AF6F05-3E44-408F-BFBD-0E03C58C107E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SharpZipLib", "SharpZipLib\SharpZipLib.csproj", "{C20AFEE1-A9F6-41F7-AA7E-51F68A26B84A}"
+EndProject
+Project("{00000000-0000-0000-0000-000000000000}") = "ImageUploaderTest1", "ImageUploaderTest1\ImageUploaderTest1.csproj", "{52C58A92-F5EF-47AD-97EF-66E4C180E89A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -19,6 +23,14 @@ Global
 		{89AF6F05-3E44-408F-BFBD-0E03C58C107E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{89AF6F05-3E44-408F-BFBD-0E03C58C107E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{89AF6F05-3E44-408F-BFBD-0E03C58C107E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C20AFEE1-A9F6-41F7-AA7E-51F68A26B84A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C20AFEE1-A9F6-41F7-AA7E-51F68A26B84A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C20AFEE1-A9F6-41F7-AA7E-51F68A26B84A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C20AFEE1-A9F6-41F7-AA7E-51F68A26B84A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{52C58A92-F5EF-47AD-97EF-66E4C180E89A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{52C58A92-F5EF-47AD-97EF-66E4C180E89A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{52C58A92-F5EF-47AD-97EF-66E4C180E89A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{52C58A92-F5EF-47AD-97EF-66E4C180E89A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
