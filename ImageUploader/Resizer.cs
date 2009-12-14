@@ -13,61 +13,57 @@ namespace ImageUploader
 
 		public StreamHolder ResizeStream(Stream inputStream, string name, int maxWidth, int maxHeight)
 		{
-			using (inputStream)
+
+			// Decode
+			DecodedJpeg jpegIn = new JpegDecoder(inputStream).Decode();
+
+			if (!ImageResizer.ResizeNeeded(jpegIn.Image, maxWidth))
 			{
-				// Decode
-				DecodedJpeg jpegIn = new JpegDecoder(inputStream).Decode();
-
-				if (!ImageResizer.ResizeNeeded(jpegIn.Image, maxWidth))
-				{
-					return new StreamHolder(inputStream, name);
-				}
-				else
-				{
-					// Resize
-					DecodedJpeg jpegOut = new DecodedJpeg(
-						new ImageResizer(jpegIn.Image)
-							.Resize(maxWidth, maxHeight, ResamplingFilters.NearestNeighbor),
-						jpegIn.MetaHeaders); // Retain EXIF details
-
-					// Encode
-					var outputStream = new MemoryStream();
-					new JpegEncoder(jpegOut, 90, outputStream).Encode();
-					// Display 
-					outputStream.Seek(0, SeekOrigin.Begin);
-					return new StreamHolder(outputStream, name);
-				}
-
+				return new StreamHolder(inputStream, name);
 			}
+			else
+			{
+				// Resize
+				DecodedJpeg jpegOut = new DecodedJpeg(
+					new ImageResizer(jpegIn.Image)
+						.Resize(maxWidth, maxHeight, ResamplingFilters.NearestNeighbor),
+					jpegIn.MetaHeaders); // Retain EXIF details
+
+				// Encode
+				var outputStream = new MemoryStream();
+				new JpegEncoder(jpegOut, 90, outputStream).Encode();
+				// Display 
+				outputStream.Seek(0, SeekOrigin.Begin);
+				return new StreamHolder(outputStream, name);
+			}
+
+
 		}
 
 		public StreamHolder ResizeStream(Stream inputStream, string name, int maxWidth)
 		{
-			using (inputStream)
+
+			// Decode
+			DecodedJpeg jpegIn = new JpegDecoder(inputStream).Decode();
+
+			if (!ImageResizer.ResizeNeeded(jpegIn.Image, maxWidth))
 			{
-				// Decode
-				DecodedJpeg jpegIn = new JpegDecoder(inputStream).Decode();
+				return new StreamHolder(inputStream, name);
+			}
+			else
+			{
+				// Resize
+				DecodedJpeg jpegOut = new DecodedJpeg(
+					new ImageResizer(jpegIn.Image)
+						.Resize(maxWidth, ResamplingFilters.NearestNeighbor),
+					jpegIn.MetaHeaders); // Retain EXIF details
 
-				if (!ImageResizer.ResizeNeeded(jpegIn.Image, maxWidth))
-				{
-					return new StreamHolder(inputStream, name);
-				}
-				else
-				{
-					// Resize
-					DecodedJpeg jpegOut = new DecodedJpeg(
-						new ImageResizer(jpegIn.Image)
-							.Resize(maxWidth,  ResamplingFilters.NearestNeighbor),
-						jpegIn.MetaHeaders); // Retain EXIF details
-
-					// Encode
-					var outputStream = new MemoryStream();
-					new JpegEncoder(jpegOut, 90, outputStream).Encode();
-					// Display 
-					outputStream.Seek(0, SeekOrigin.Begin);
-					return new StreamHolder(outputStream, name);
-				}
-
+				// Encode
+				var outputStream = new MemoryStream();
+				new JpegEncoder(jpegOut, 90, outputStream).Encode();
+				// Display 
+				outputStream.Seek(0, SeekOrigin.Begin);
+				return new StreamHolder(outputStream, name);
 			}
 		}
 	}

@@ -1,0 +1,14 @@
+This project isn't complete yet.  I could use some assistance on the Silverlight end. 
+
+ Currently the project resizes and zips all with code that is safe for silverlight assemblies.
+ 
+ Ultimately I would like to have a very simple UI with a processing gif (during the resize and zip phase).
+ 
+ Then a mac like progress bar during the upload.
+ 
+ Their should be two buttons one with "Browse files" and one with "Upload files".  
+ I considered the ability to do this all asynch but then doing the single progress bar becomes a battle so I dismissed it.  
+ 
+ I think it will make up for non-asynch with the single post and the good UI.
+ 
+ 

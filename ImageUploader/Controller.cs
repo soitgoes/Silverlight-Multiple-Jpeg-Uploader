@@ -10,6 +10,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
+using ICSharpCode.SharpZipLib.Core;
 using ICSharpCode.SharpZipLib.Zip;
 using Path = System.IO.Path;
 
@@ -19,7 +20,9 @@ namespace ImageUploader
 	{
 		public IImageResizer ImageResizer { get; set; }
 		public IZipper Zipper { get; set; }
-        
+
+		private byte[] buffer = new byte[4096];
+
 		//for each image on the filesystem pipe through all the streams up to the server
 
 		//Resize and produce all the images through the resizer and into memory streams
@@ -28,28 +31,36 @@ namespace ImageUploader
 
 		//Pass the Zipper out put stream into teh request stream.
 
-		public void ResizeAndZipToStream(Stream responseStream, params string[] filePaths)
+		public void ResizeAndZipToStream(Stream outputStream, params string[] filePaths)
 		{
 			var streams = new List<StreamHolder>();
+			MemoryStream ms;
 			foreach (var path in filePaths)
 			{
-				using (var fs = File.OpenRead(path))
+				var fs = File.OpenRead(path);
 				{
+					ms = new MemoryStream();
+					StreamUtils.Copy(fs, ms, buffer);
+
 					string fileName = Path.GetFileName(path);
 					string ext = Path.GetExtension(path);
 					string prefix = Path.GetFileNameWithoutExtension(path);
 
-					var streamHolder = new StreamHolder(fs, fileName);
+					var streamHolder = new StreamHolder(ms, fileName);
 
-					var sizes = new int[100, 300, 500];
+					var sizes = new int[] { 100, 300, 500 };
 					foreach (int size in sizes)
 					{
-						streams.Add(ImageResizer.ResizeStream(fs, prefix + "_" + size.ToString() + ext, size));
+
+						ms.Seek(0, SeekOrigin.Begin);
+						streams.Add(ImageResizer.ResizeStream(ms, prefix + "_" + size.ToString() + ext, size));
 					}
-					Zipper.CreateZip(responseStream, streams.ToArray());
+
+
+				
 				}
 			}
+			Zipper.CreateZip(outputStream, streams.ToArray());
 		}
-
 	}
 }

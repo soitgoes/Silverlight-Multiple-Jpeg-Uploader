@@ -28,7 +28,7 @@ namespace ImageUploaderTest1
 		[TearDown]
 		public void TearDown()
 		{
-			Cleanup();
+		Cleanup();
 		}
 
 		private void Cleanup()
@@ -51,6 +51,17 @@ namespace ImageUploaderTest1
 				StreamUtils.Copy(holder.Stream, imgFileOutput, buffer);	
 			}
 		}
+
+		[Test]
+		public void CanResizeAndZipToStream()
+		{
+			Controller controller = new Controller();
+			controller.ImageResizer = new JpgImageResizer();
+			controller.Zipper = new Zipper();
+			controller.ResizeAndZipToStream(File.Create(BasePath + zipName), Directory.GetFiles(BasePath, "*.jpg"));
+			Assert.IsTrue(File.Exists(BasePath + zipName), "Archive was not created");
+           }
+
 
 
 		[Test]
@@ -99,7 +110,6 @@ namespace ImageUploaderTest1
 		[Test]
 		public void CanZipFromStream()
 		{
-			
 			var paths = Directory.GetFiles(BasePath);
 			var zipper = new Zipper();
 
